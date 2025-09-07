@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "react-router-dom";
+import Footer from "@/components/Footer";
 
 const events = {
   technical: [
@@ -25,6 +27,7 @@ const events = {
 
 const Registration = () => {
   const { toast } = useToast();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -35,6 +38,15 @@ const Registration = () => {
   });
   const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Pre-select event from URL parameter
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const eventParam = searchParams.get('event');
+    if (eventParam) {
+      setSelectedEvents([eventParam]);
+    }
+  }, [location]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
@@ -251,6 +263,7 @@ const Registration = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

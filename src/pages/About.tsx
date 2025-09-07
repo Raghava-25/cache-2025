@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Calendar, MapPin, Users, Award } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const About = () => {
   return (
@@ -175,6 +176,7 @@ const About = () => {
           </Card>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

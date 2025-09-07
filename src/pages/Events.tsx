@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Code, Palette, Gamepad2, Camera, Trophy } from "lucide-react";
 import eventBg from "@/assets/event-card-bg.jpg";
+import Footer from "@/components/Footer";
 
 const technicalEvents = [
   {
@@ -205,6 +206,7 @@ const Events = () => {
           </Card>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

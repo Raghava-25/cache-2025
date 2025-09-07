@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import Footer from "@/components/Footer";
 
 const organizers = [
   { name: "Abhivan Charan", role: "Event Coordinator" },
@@ -49,54 +50,8 @@ const Organizers = () => {
           ))}
         </div>
 
-        {/* Developers Section */}
-        <div className="mt-20 animate-slide-up">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 text-gradient">
-              Developers
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              The technical minds behind the Cache 2025 website
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            <Card className="card-gradient border-border text-center">
-              <CardContent className="pt-8 pb-6">
-                <div className="w-24 h-24 bg-gradient-secondary rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-secondary-foreground">RK</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-gradient">
-                  R Karthikeya
-                </h3>
-                <p className="text-muted-foreground mb-2">
-                  CEO and Founder of UptoMo
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Full-stack developer and tech entrepreneur
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="card-gradient border-border text-center">
-              <CardContent className="pt-8 pb-6">
-                <div className="w-24 h-24 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-primary-foreground">R</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-gradient">
-                  Raghava
-                </h3>
-                <p className="text-muted-foreground mb-2">
-                  Co-founder and Developer
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Backend specialist and system architect
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
       </div>
+      <Footer />
     </div>
   );
 };
