@@ -8,89 +8,112 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
+    /* Cache 2025 Brand Colors - Vibrant Tech Fest Theme */
+    --background: 240 10% 4%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 240 10% 8%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 240 10% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Primary - Electric Purple */
+    --primary: 270 91% 65%;
+    --primary-foreground: 210 40% 98%;
+    --primary-glow: 270 100% 80%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    /* Secondary - Cyber Blue */  
+    --secondary: 220 91% 65%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
+    /* Accent - Neon Pink */
+    --accent: 320 91% 65%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    /* Muted colors for subtle elements */
+    --muted: 240 5% 15%;
+    --muted-foreground: 240 5% 65%;
+
+    /* Destructive - Bright Red */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Borders and inputs */
+    --border: 240 6% 20%;
+    --input: 240 6% 20%;
+    --ring: 270 91% 65%;
+
+    --radius: 0.75rem;
+
+    /* Cache 2025 Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--primary)));
+    --gradient-hero: linear-gradient(135deg, hsl(270 91% 65%) 0%, hsl(220 91% 65%) 50%, hsl(320 91% 65%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(240 15% 12%));
+    
+    /* Shadows with brand colors */
+    --shadow-primary: 0 10px 40px -10px hsl(var(--primary) / 0.4);
+    --shadow-glow: 0 0 60px hsl(var(--primary-glow) / 0.3);
+    --shadow-card: 0 8px 32px -8px hsl(240 10% 4% / 0.4);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Sidebar colors */
+    --sidebar-background: 240 10% 6%;
+    --sidebar-foreground: 240 5% 90%;
+    --sidebar-primary: 270 91% 65%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 240 6% 15%;
+    --sidebar-accent-foreground: 240 5% 90%;
+    --sidebar-border: 240 6% 20%;
+    --sidebar-ring: 270 91% 65%;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+
+    --primary: 270 91% 55%;
+    --primary-foreground: 210 40% 98%;
+    --primary-glow: 270 100% 70%;
+
+    --secondary: 220 91% 55%;
+    --secondary-foreground: 210 40% 98%;
+
+    --accent: 320 91% 55%;
+    --accent-foreground: 210 40% 98%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 5% 45%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 270 91% 55%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(270 91% 55%) 0%, hsl(220 91% 55%) 50%, hsl(320 91% 55%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(240 5% 98%));
+    --shadow-card: 0 8px 32px -8px hsl(240 10% 4% / 0.1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5% 26%;
+    --sidebar-primary: 270 91% 55%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4% 96%;
+    --sidebar-accent-foreground: 240 5% 26%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-ring: 270 91% 55%;
   }
 }
 
@@ -100,6 +123,62 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-poppins;
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(240 15% 6%) 100%);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+
+  /* Cache 2025 Custom Components */
+  .hero-title {
+    @apply text-6xl md:text-8xl font-black bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .gradient-bg {
+    background: var(--gradient-hero);
+  }
+
+  .card-gradient {
+    background: var(--gradient-card);
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  .glow-effect {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .smooth-transition {
+    transition: var(--transition-smooth);
+  }
+
+  .bounce-transition {
+    transition: var(--transition-bounce);
+  }
+
+  /* Floating animation for hero elements */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Pulse glow for CTAs */
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--accent) / 0.3); }
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
   }
 }
