@@ -1,14 +1,24 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Footer from "@/components/Footer";
 
+// Import profile images
+import abhivanImage from "@/assets/organizers/abhivan-charan.jpg";
+import nagaDurgaImage from "@/assets/organizers/naga-durga.jpg";
+import vinodImage from "@/assets/organizers/vinod.jpg";
+import muraliImage from "@/assets/organizers/murali.jpg";
+import raghavaImage from "@/assets/organizers/raghava.jpg";
+import zaheerImage from "@/assets/organizers/zaheer.jpg";
+import kranthImage from "@/assets/organizers/kranth.jpg";
+
 const organizers = [
-  { name: "Abhivan Charan", role: "Event Coordinator" },
-  { name: "Naga Durga", role: "Technical Lead" },
-  { name: "Vinod", role: "Operations Head" },
-  { name: "Murali", role: "Marketing Lead" },
-  { name: "Raghava", role: "Development Lead" },
-  { name: "Zaheer", role: "Design Head" },
-  { name: "Kranth", role: "Logistics Coordinator" },
+  { name: "Abhivan Charan", role: "Event Coordinator", image: abhivanImage },
+  { name: "Naga Durga", role: "Technical Lead", image: nagaDurgaImage },
+  { name: "Vinod", role: "Operations Head", image: vinodImage },
+  { name: "Murali", role: "Marketing Lead", image: muraliImage },
+  { name: "Raghava", role: "Development Lead", image: raghavaImage },
+  { name: "Zaheer", role: "Design Head", image: zaheerImage },
+  { name: "Kranth", role: "Logistics Coordinator", image: kranthImage },
 ];
 
 const Organizers = () => {
@@ -34,11 +44,16 @@ const Organizers = () => {
               className="group card-gradient border-border hover:scale-105 smooth-transition text-center"
             >
               <CardContent className="pt-8 pb-6">
-                <div className="w-24 h-24 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-primary-foreground">
+                <Avatar className="w-24 h-24 mx-auto mb-4">
+                  <AvatarImage 
+                    src={organizer.image} 
+                    alt={`${organizer.name} profile picture`}
+                    className="object-cover"
+                  />
+                  <AvatarFallback className="bg-gradient-primary text-primary-foreground text-2xl font-bold">
                     {organizer.name.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
+                  </AvatarFallback>
+                </Avatar>
                 <h3 className="text-xl font-bold mb-2 group-hover:text-gradient smooth-transition">
                   {organizer.name}
                 </h3>
