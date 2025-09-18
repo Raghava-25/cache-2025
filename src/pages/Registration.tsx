@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import Footer from "@/components/Footer";
 
 const events = {
@@ -29,14 +30,14 @@ const Registration = () => {
   const { toast } = useToast();
   const location = useLocation();
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
     email: '',
     phone: '',
     college: '',
-    rollNo: '',
+    roll_number: '',
     section: '',
   });
-  const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
+  const [selectedEvents, setSelectedEvents] = useState<Array<{id: string, name: string, price: number}>>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // Pre-select event from URL parameter
@@ -44,7 +45,11 @@ const Registration = () => {
     const searchParams = new URLSearchParams(location.search);
     const eventParam = searchParams.get('event');
     if (eventParam) {
-      setSelectedEvents([eventParam]);
+      const allEvents = [...events.technical, ...events.nonTechnical];
+      const event = allEvents.find(e => e.id === eventParam);
+      if (event) {
+        setSelectedEvents([event]);
+      }
     }
   }, [location]);
 
@@ -55,23 +60,30 @@ const Registration = () => {
     }));
   };
 
-  const handleEventToggle = (eventId: string) => {
+  const handleEventToggle = (event: {id: string, name: string, price: number}) => {
     setSelectedEvents(prev => 
-      prev.includes(eventId) 
-        ? prev.filter(id => id !== eventId)
-        : [...prev, eventId]
+      prev.find(e => e.id === event.id)
+        ? prev.filter(e => e.id !== event.id)
+        : [...prev, event]
     );
   };
 
   const getTotalAmount = () => {
-    return [...events.technical, ...events.nonTechnical]
-      .filter(event => selectedEvents.includes(event.id))
-      .reduce((total, event) => total + event.price, 0);
+    return selectedEvents.reduce((total, event) => total + event.price, 0);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!formData.name || !formData.email || !formData.phone || !formData.college) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (selectedEvents.length === 0) {
       toast({
         title: "No events selected",
@@ -83,17 +95,48 @@ const Registration = () => {
 
     setIsLoading(true);
     
-    // Simulate registration process
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      // Save registration to database
+      const { error } = await supabase
+        .from('registrations')
+        .insert({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          college: formData.college,
+          roll_number: formData.roll_number,
+          section: formData.section,
+          selected_events: selectedEvents,
+          total_amount: getTotalAmount(),
+        });
+
+      if (error) throw error;
+
       toast({
         title: "Registration Successful! 🎉",
-        description: `You've registered for ${selectedEvents.length} event(s). Total amount: ₹${getTotalAmount()}. Redirecting to payment...`,
+        description: `Welcome ${formData.name}! You've successfully registered for ${selectedEvents.length} event(s). Total: ₹${getTotalAmount()}`,
       });
       
-      // Here you would integrate with Razorpay
-      console.log("Registration Data:", { formData, selectedEvents, totalAmount: getTotalAmount() });
-    }, 2000);
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        college: '',
+        roll_number: '',
+        section: '',
+      });
+      setSelectedEvents([]);
+    } catch (error) {
+      console.error('Registration error:', error);
+      toast({
+        title: "Registration Failed",
+        description: "There was an error processing your registration. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -119,11 +162,11 @@ const Registration = () => {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="fullName">Full Name *</Label>
+                    <Label htmlFor="name">Full Name *</Label>
                     <Input
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
+                      id="name"
+                      name="name"
+                      value={formData.name}
                       onChange={handleInputChange}
                       required
                       className="mt-1"
@@ -165,11 +208,11 @@ const Registration = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="rollNo">Roll Number *</Label>
+                    <Label htmlFor="roll_number">Roll Number *</Label>
                     <Input
-                      id="rollNo"
-                      name="rollNo"
-                      value={formData.rollNo}
+                      id="roll_number"
+                      name="roll_number"
+                      value={formData.roll_number}
                       onChange={handleInputChange}
                       required
                       className="mt-1"
@@ -201,19 +244,19 @@ const Registration = () => {
                 <div>
                   <h3 className="text-lg font-semibold mb-3 text-primary">Technical Events</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {events.technical.map(event => (
-                      <div key={event.id} className="flex items-center space-x-2 p-3 rounded-lg bg-muted/30">
-                        <Checkbox
-                          id={event.id}
-                          checked={selectedEvents.includes(event.id)}
-                          onCheckedChange={() => handleEventToggle(event.id)}
-                        />
-                        <Label htmlFor={event.id} className="flex-1 cursor-pointer">
-                          {event.name}
-                        </Label>
-                        <span className="text-sm font-medium text-primary">₹{event.price}</span>
-                      </div>
-                    ))}
+                     {events.technical.map(event => (
+                       <div key={event.id} className="flex items-center space-x-2 p-3 rounded-lg bg-muted/30">
+                         <Checkbox
+                           id={event.id}
+                           checked={selectedEvents.find(e => e.id === event.id) !== undefined}
+                           onCheckedChange={() => handleEventToggle(event)}
+                         />
+                         <Label htmlFor={event.id} className="flex-1 cursor-pointer">
+                           {event.name}
+                         </Label>
+                         <span className="text-sm font-medium text-primary">₹{event.price}</span>
+                       </div>
+                     ))}
                   </div>
                 </div>
 
@@ -221,19 +264,19 @@ const Registration = () => {
                 <div>
                   <h3 className="text-lg font-semibold mb-3 text-secondary">Non-Technical Events</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {events.nonTechnical.map(event => (
-                      <div key={event.id} className="flex items-center space-x-2 p-3 rounded-lg bg-muted/30">
-                        <Checkbox
-                          id={event.id}
-                          checked={selectedEvents.includes(event.id)}
-                          onCheckedChange={() => handleEventToggle(event.id)}
-                        />
-                        <Label htmlFor={event.id} className="flex-1 cursor-pointer">
-                          {event.name}
-                        </Label>
-                        <span className="text-sm font-medium text-secondary">₹{event.price}</span>
-                      </div>
-                    ))}
+                     {events.nonTechnical.map(event => (
+                       <div key={event.id} className="flex items-center space-x-2 p-3 rounded-lg bg-muted/30">
+                         <Checkbox
+                           id={event.id}
+                           checked={selectedEvents.find(e => e.id === event.id) !== undefined}
+                           onCheckedChange={() => handleEventToggle(event)}
+                         />
+                         <Label htmlFor={event.id} className="flex-1 cursor-pointer">
+                           {event.name}
+                         </Label>
+                         <span className="text-sm font-medium text-secondary">₹{event.price}</span>
+                       </div>
+                     ))}
                   </div>
                 </div>
 
